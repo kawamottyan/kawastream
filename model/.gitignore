@@ -1,0 +1,7 @@
+.env
+
+ml-20m/*.csv
+
+data/*.csv
+data/*.pickle
+data/*.json
