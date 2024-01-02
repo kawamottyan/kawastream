@@ -45,13 +45,6 @@ This project inspired by
 
 3. Client deployment
 
-    change baseURL in ./client/src/api/client/private.client.js  
-    you can use your localhost
-    ```
-    const baseURL = "https://movie-recommendation-system-server.vercel.app/api/v1/";
-    // const baseURL = "http://localhost:5000/api/v1/";
-    ```
-
     run client
     ```
     cd client
