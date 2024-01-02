@@ -276,12 +276,12 @@ const MediaDetail = () => {
 
           {/* media recommendation */}
 
-          {predictions.length > 0 ? (
+          {predictions.flatMap(prediction => prediction.predictions).sort(() => Math.random() - 0.5).slice(0, 10).length > 0 ? (
             <Container header="you may also like">
               <AutoSwiper>
-                {predictions.map((movie, index) => (
+                {predictions.flatMap(prediction => prediction.predictions).sort(() => Math.random() - 0.5).slice(0, 10).map((media, index) => (
                   <SwiperSlide key={index}>
-                    <MediaItem media={movie} containerName="you may also like" />
+                    <MediaItem media={media} containerName="you may also like" />
                   </SwiperSlide>
                 ))}
               </AutoSwiper>
