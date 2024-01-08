@@ -2,7 +2,8 @@
 
 This project involves the development of a personalized recommendation system for a movie streaming service.
 
-Website: [https://kawastream.kawamottyan.com/](https://kawastream.kawamottyan.com/)
+Website: [https://kawastream.kawamottyan.com/](https://kawastream.kawamottyan.com/)  
+Article: [日本語](https://zenn.dev/kawamottyan/articles/5d5700923796cd)
 
 This project inspired by  
 - [Netflix Technology Blog](https://netflixtechblog.medium.com/)
@@ -24,8 +25,21 @@ This project inspired by
     cd kawastream
     ```
 
+2. Data Preparation
 
-2. Server deployment
+    set up data from MovieLens
+    - run dataprocessing.ipynb
+    - run datasplitting.ipynb
+
+    save TMDB data in MongoDB
+    - set up Lambda Environment
+        ```
+        ATLAS_URI	mongodb+srv://... # add your MongoDB Connection String here
+        TMDB_KEY	eec... # add your TMDB API key here
+        ```
+    - set up Lambda [Function](https://github.com/kawamottyan/kawastream/tree/main/model/aws/Lambda/FUNCTION/TMDB/lambda_function.py)
+
+3. Server Deployment
 
     create env file in the server folder
     ```
@@ -43,7 +57,7 @@ This project inspired by
     yarn start
     ```
 
-3. Client deployment
+4. Client Deployment
 
     run client
     ```
@@ -52,16 +66,16 @@ This project inspired by
     yarn start
     ```
 
-4. Model deployment
-
-    set up data from MovieLens
-    - run dataprocessing.ipynb
-    - run datasplitting.ipynb
+5. Model Deployment
 
     set up aws
-    - save data from datasplitting.ipynb in s3
-    - set up sagemaker
-    - set up lambda
+    - save data from datasplitting.ipynb in S3
+    - set up [SageMaker](https://github.com/kawamottyan/kawastream/tree/main/model/aws/SageMaker)
+    - set up [Lambda](https://github.com/kawamottyan/kawastream/tree/main/model/aws/Lambda)
+
+### 🖌️ System Architecture
+
+![system_architecture](./images/system_architecture.png)
 
 ### 🗂️ Structure
 
@@ -83,7 +97,13 @@ This project inspired by
 │       ├─ App.jsx
 │       └─ index.jsx
 ├─ model
+│   ├─ aws
+│   │   ├─ Lambda
+│   │   └─ SageMaker
+│   │       ├─ GRU4Rec
+│   │       └─ LinUCB
 │   ├─ eval
+│   │   └─ model_eval.ipynb
 │   ├─ experiment
 │   │   ├─ EDA
 │   │   └─ model
@@ -106,6 +126,7 @@ This project inspired by
 ├─ LICENSE
 └─ README.md
 ```
+
 ### 🚗 Roadmap
 
 - [ ] Verification in an Online Environment

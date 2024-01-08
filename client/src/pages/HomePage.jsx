@@ -7,6 +7,7 @@ import Container from "../components/common/Container";
 import MediaItem from "../components/common/MediaItem";
 import predictionApi from '../api/modules/prediction.api';
 import nowplayingApi from '../api/modules/nowplaying.api';
+import { toast } from "react-toastify";
 
 import { SwiperSlide } from "swiper/react";
 import AutoSwiper from "../components/common/AutoSwiper";
@@ -81,6 +82,19 @@ const HomePage = () => {
     fetchPopular();
     fetchToprated();
     fetchExplainList();
+
+    if (!localStorage.getItem("actkn")) {
+      toast.info("Signin for Recommendations", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
   }, []);
 
   return (
@@ -107,7 +121,7 @@ const HomePage = () => {
           );
         })}
 
-        {popular.length > 0 && (
+        {/* {popular.length > 0 && (
           <Container header="Popular">
             <AutoSwiper>
               {popular.map((movie, index) => (
@@ -117,7 +131,7 @@ const HomePage = () => {
               ))}
             </AutoSwiper>
           </Container>
-        )}
+        )} */}
 
         {toprated.length > 0 && (
           <Container header="Top Rated">
