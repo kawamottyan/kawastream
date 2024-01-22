@@ -6,6 +6,7 @@ import reviewRoute from "./review.route.js";
 import { getNowplaying } from "../controllers/nowplaying.controller.js";
 import { getPopular } from "../controllers/popular.controller.js";
 import { getToprated } from "../controllers/toprated.controller.js";
+import { getTrending } from "../controllers/trending.controller.js";
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use("/:mediaType", mediaRoute);
 router.get('/nowplaying', getNowplaying);
 router.get('/popular', getPopular);
 router.get('/toprated', getToprated);
+router.get('/trending', getTrending);
 
 export default router;

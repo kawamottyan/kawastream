@@ -5,22 +5,27 @@ import { Box } from '@mui/material';
 import uiConfigs from "../configs/ui.configs";
 import Container from "../components/common/Container";
 import MediaItem from "../components/common/MediaItem";
-import predictionApi from '../api/modules/prediction.api';
-import nowplayingApi from '../api/modules/nowplaying.api';
 import { toast } from "react-toastify";
 
 import { SwiperSlide } from "swiper/react";
 import AutoSwiper from "../components/common/AutoSwiper";
-import explainApi from '../api/modules/explain.api';
+
+import predictionApi from '../api/modules/prediction.api';
 import popularApi from '../api/modules/popular.api';
-import topratedApi from '../api/modules/toprated.api';
+import trendingApi from '../api/modules/trending.api';
+import explainApi from '../api/modules/explain.api';
+
+// import nowplayingApi from '../api/modules/nowplaying.api';
+// import topratedApi from '../api/modules/toprated.api';
 
 const HomePage = () => {
   const [predictions, setPredictions] = useState([]);
-  const [nowPlaying, setNowPlaying] = useState([]);
   const [popular, setPopular] = useState([]);
-  const [toprated, setToprated] = useState([]);
+  const [trending, setTrending] = useState([]);
   const [genres, setGenres] = useState([]);
+
+  // const [nowPlaying, setNowPlaying] = useState([]);
+  // const [toprated, setToprated] = useState([]);
 
   useEffect(() => {
     const fetchPredictions = async () => {
@@ -30,17 +35,6 @@ const HomePage = () => {
         setPredictions(response);
       } else if (err) {
         console.error("Failed to fetch predictions");
-      }
-    };
-
-    const fetchNowPlaying = async () => {
-      const { response, err } = await nowplayingApi.getList();
-
-      if (response) {
-        const randomizedNowPlaying = response.sort(() => Math.random() - 0.5);
-        setNowPlaying(randomizedNowPlaying);
-      } else if (err) {
-        console.error("Failed to fetch now playing movies", err);
       }
     };
 
@@ -55,14 +49,14 @@ const HomePage = () => {
       }
     };
 
-    const fetchToprated = async () => {
-      const { response, err } = await topratedApi.getList();
+    const fetchTrending = async () => {
+      const { response, err } = await trendingApi.getList();
 
       if (response) {
-        const randomizedToprated = response.sort(() => Math.random() - 0.5);
-        setToprated(randomizedToprated);
+        const randomizedTrending = response.sort(() => Math.random() - 0.5);
+        setTrending(randomizedTrending);
       } else if (err) {
-        console.error("Failed to fetch toprated movies", err);
+        console.error("Failed to fetch trending movies", err);
       }
     };
 
@@ -77,11 +71,35 @@ const HomePage = () => {
       }
     };
 
+    // const fetchNowPlaying = async () => {
+    //   const { response, err } = await nowplayingApi.getList();
+
+    //   if (response) {
+    //     const randomizedNowPlaying = response.sort(() => Math.random() - 0.5);
+    //     setNowPlaying(randomizedNowPlaying);
+    //   } else if (err) {
+    //     console.error("Failed to fetch now playing movies", err);
+    //   }
+    // };
+
+    // const fetchToprated = async () => {
+    //   const { response, err } = await topratedApi.getList();
+
+    //   if (response) {
+    //     const randomizedToprated = response.sort(() => Math.random() - 0.5);
+    //     setToprated(randomizedToprated);
+    //   } else if (err) {
+    //     console.error("Failed to fetch toprated movies", err);
+    //   }
+    // };
+
     fetchPredictions();
-    fetchNowPlaying();
     fetchPopular();
-    fetchToprated();
+    fetchTrending();
     fetchExplainList();
+
+    // fetchNowPlaying();
+    // fetchToprated();
 
     if (!localStorage.getItem("actkn")) {
       toast.info("Signin for Recommendations", {
@@ -94,7 +112,6 @@ const HomePage = () => {
         progress: undefined,
       });
     }
-
   }, []);
 
   return (
@@ -121,19 +138,31 @@ const HomePage = () => {
           );
         })}
 
-        {/* {popular.length > 0 && (
+        {popular.length > 0 && (
           <Container header="Popular">
             <AutoSwiper>
-              {popular.map((movie, index) => (
+              {popular.slice(0, 10).map((movie, index) => (
                 <SwiperSlide key={index}>
                   <MediaItem media={movie} containerName="Popular" />
                 </SwiperSlide>
               ))}
             </AutoSwiper>
           </Container>
-        )} */}
+        )}
 
-        {toprated.length > 0 && (
+        {trending.length > 0 && (
+          <Container header="Trending">
+            <AutoSwiper>
+              {trending.slice(0, 10).map((movie, index) => (
+                <SwiperSlide key={index}>
+                  <MediaItem media={movie} containerName="Trending" />
+                </SwiperSlide>
+              ))}
+            </AutoSwiper>
+          </Container>
+        )}
+
+        {/* {toprated.length > 0 && (
           <Container header="Top Rated">
             <AutoSwiper>
               {toprated.map((movie, index) => (
@@ -155,7 +184,7 @@ const HomePage = () => {
               ))}
             </AutoSwiper>
           </Container>
-        )}
+        )} */}
 
       </Box>
     </>
